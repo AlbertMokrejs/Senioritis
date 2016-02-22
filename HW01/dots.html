@@ -1,0 +1,58 @@
+<canvas height=300 width=300 id="slate"></canvas><button id="clicker">clear</button>
+
+<script>
+var c = document.getElementById("slate");
+var ctx = c.getContext("2d");
+var button = document.getElementById("clicker");
+
+ctx.fillStyle = "#f0f000";
+ctx.strokeStyle = "#00f0f0";
+
+var havedot = 0;
+var xcor;
+var ycor;
+
+var clear = function(e){
+	e.preventDefault();
+	ctx.clearRect(0, 0, c.width, c.height);
+	havedot = 0;
+	}
+
+var dot = function(e){
+	e.preventDefault();
+	if (havedot == 0){
+		ctx.beginPath();
+		havedot = 1;
+		ctx.moveTo(e.offsetX,e.offsetY);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.arc(e.offsetX,e.offsetY,10,0,2*Math.PI);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.arc(e.offsetX,e.offsetY,7,0,2*Math.PI);
+		ctx.stroke();
+		//ctx.fill();
+		xcor = e.offsetX;
+		ycor = e.offsetY;
+	} else {	
+		ctx.beginPath();
+		ctx.moveTo(xcor,ycor);
+		ctx.lineTo(e.offsetX,e.offsetY);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.arc(e.offsetX,e.offsetY,10,0,2*Math.PI);
+		ctx.stroke();	
+		ctx.beginPath();
+		ctx.arc(e.offsetX,e.offsetY,7,0,2*Math.PI);
+		ctx.stroke();
+		//ctx.fill();
+		
+		
+		xcor = e.offsetX;
+		ycor = e.offsetY;
+	}
+	}
+
+c.addEventListener("click", dot);
+button.addEventListener("click",clear);
+</script>
