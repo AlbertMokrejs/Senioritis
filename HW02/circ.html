@@ -12,7 +12,7 @@ ctx.strokeStyle = "#00f0f0";
 
 
 var indeed = 0;
-var radus = 3;
+var radus = 10;
 var grow = 2;
 
 var clear = function(e){
@@ -29,16 +29,26 @@ var start = function(e){
 	indeed = 1;
 	grow = 2;
 	radus = 3;
+	window.requestAnimationFrame(circ);
 }
 	
 var circ = function(){
-	e.preventDefault();
+	
 	
 	if (indeed == 1){
 	
 	if (radus > c.width/2){
-		ctx.beginPath();
 		grow = -2;
+	}
+
+	if (radus < 10) {
+	  grow = 2 
+
+	}
+	  	ctx.beginPath()
+		ctx.clearRect(0, 0, c.width, c.height);
+		ctx.beginPath()
+		radus = radus + grow
 		ctx.moveTo(c.width/2,c.height/2);
 		ctx.stroke();
 		ctx.beginPath();
@@ -48,18 +58,6 @@ var circ = function(){
 		ctx.arc(c.width/2,c.height/2,radus - 3,0,2*Math.PI);
 		ctx.stroke();
 
-	} if (radus < 3) {
-	  grow = 2
-	  ctx.moveTo(c.width/2,c.height/2);
-		ctx.beginPath();
-		ctx.beginPath();
-		ctx.arc(c.width/2,c.height/2,radus,0,2*Math.PI);
-		ctx.stroke();	
-		ctx.beginPath();
-		ctx.arc(c.width/2,c.height/2,radus - 3,0,2*Math.PI);
-		ctx.stroke();
-	}
-	
 	}
 	
 	window.requestAnimationFrame(circ);
@@ -68,5 +66,5 @@ var circ = function(){
 d.addEventListener("click",start)
 button.addEventListener("click",clear);
 
-window.requestAnimationFrame(circ);
+
 </script>
