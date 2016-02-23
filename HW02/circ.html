@@ -1,4 +1,4 @@
-<canvas height=300 width=300 id="slate"></canvas><button id = "start"> start</button><button id="clicker">clear</button>
+<canvas height=600 width=600 id="slate"></canvas><button id = "start"> start</button><button id="clicker">clear</button>
 
 <script>
 var c = document.getElementById("slate");
@@ -9,11 +9,12 @@ var button = document.getElementById("clicker");
 ctx.fillStyle = "#f0f000";
 ctx.strokeStyle = "#00f0f0";
 
-
-
 var indeed = 0;
 var radus = 10;
 var grow = 2;
+var roto = 0;
+var rgrow = 5;
+var conVar = 180/Math.PI;
 
 var clear = function(e){
 	e.preventDefault();
@@ -21,6 +22,8 @@ var clear = function(e){
 	grow = 2;
 	radus = 3;
 	indeed = 0;
+	roto = 0;
+	window.cancelAnimationFrame(circ);
 	}
 	
 var start = function(e){
@@ -29,6 +32,7 @@ var start = function(e){
 	indeed = 1;
 	grow = 2;
 	radus = 3;
+	roto = 0;
 	window.requestAnimationFrame(circ);
 }
 	
@@ -37,7 +41,7 @@ var circ = function(){
 	
 	if (indeed == 1){
 	
-	if (radus > c.width/2){
+	if (radus > c.width/2 - 10){
 		grow = -2;
 	}
 
@@ -47,15 +51,38 @@ var circ = function(){
 	}
 	  	ctx.beginPath()
 		ctx.clearRect(0, 0, c.width, c.height);
-		ctx.beginPath()
-		radus = radus + grow
-		ctx.moveTo(c.width/2,c.height/2);
-		ctx.stroke();
+		
+		radus = radus + grow;
+		roto = roto + rgrow;
+
+		ctx.strokeStyle = "#00f0f0";
 		ctx.beginPath();
-		ctx.arc(c.width/2,c.height/2,radus,0,2*Math.PI);
+		ctx.arc(c.width/2,c.height/2,radus,(roto)/conVar,(roto + 120)/conVar);
 		ctx.stroke();
+
+		ctx.strokeStyle = "#f000f0";
 		ctx.beginPath();
-		ctx.arc(c.width/2,c.height/2,radus - 3,0,2*Math.PI);
+		ctx.arc(c.width/2,c.height/2,radus - 2.5,(1.1 * roto + 60)/conVar,(1.1 * roto + 60 + 120)/conVar);
+		ctx.stroke();
+		
+		ctx.strokeStyle = "#00f0f0";
+		ctx.beginPath();
+		ctx.arc(c.width/2,c.height/2,radus - 5,(1.3 * roto + 75)/conVar,(1.3 * roto + 75 + 120)/conVar);
+		ctx.stroke();
+
+		ctx.strokeStyle = "#f000f0";
+		ctx.beginPath();
+		ctx.arc(c.width/2,c.height/2,radus + 2.5,(1.6 * roto + 60)/conVar,(1.6 * roto + 60 + 120)/conVar);
+		ctx.stroke();
+
+		ctx.strokeStyle = "#00f0f0";
+		ctx.beginPath();
+		ctx.arc(c.width/2,c.height/2,radus + 5,(1.9 * roto + 75)/conVar,(1.9 * roto + 75 + 120)/conVar);
+		ctx.stroke();
+
+		ctx.strokeStyle = "#f000f0";
+		ctx.beginPath();
+		ctx.arc(c.width/2,c.height/2,radus + 7.5,(2.2 * roto + 60)/conVar,(2.2 * roto + 60 + 120)/conVar);
 		ctx.stroke();
 
 	}
