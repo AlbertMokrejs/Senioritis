@@ -6,8 +6,10 @@ var d = document.getElementById("start");
 var ctx = c.getContext("2d");
 var button = document.getElementById("clicker");
 
-ctx.fillStyle = "#f0f000";
-ctx.strokeStyle = "#00f0f0";
+ctx.font = "20px Arial";
+ctx.fillStyle = "#000000";
+ctx.strokeStyle = "#f0f0f0";
+ctx.textAlign = "center";
 
 var indeed = 0;
 var radus = 10;
@@ -41,7 +43,7 @@ var circ = function(){
 	
 	if (indeed == 1){
 	
-	if (radus > c.width/2 - 10){
+	if (radus > c.width/2 - 50){
 		grow = -2;
 	}
 
@@ -54,6 +56,10 @@ var circ = function(){
 		
 		radus = radus + grow;
 		roto = roto + rgrow;
+
+		ctx.fillText("LOADING",c.width/2,c.height/2-radus-15);
+		ctx.fillText("LOADING",c.width/2,c.height/2+radus+35);
+
 
 		ctx.strokeStyle = "#00f0f0";
 		ctx.beginPath();
