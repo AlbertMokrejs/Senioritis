@@ -1,0 +1,99 @@
+<canvas height=600 width=600 id="slate"></canvas><button id = "start"> start</button><button id="clicker">clear</button><button id = "stop"> stop</button>
+
+<script>
+
+var c = document.getElementById("slate");
+var d = document.getElementById("start");
+var ctx = c.getContext("2d");
+var button = document.getElementById("clicker");
+var stopb = document.getElementById("stop");
+
+var img = new Image;
+img.src = "data:image/jpeg;base64,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";
+
+
+var x = 50 * Math.random();
+var y = 50 * Math.random();
+var xv = 5;
+var yv = 5;
+var exist = 0;
+var run = 0;
+ctx.fillstyle = "#e0e0e0";
+
+var clear = function(e){
+e.preventDefault();
+x = 50;
+y = 50;
+xv = 5;
+yv = 5;
+ctx.clearRect(0, 0, c.width, c.height);
+exist = 0;
+run = 0;
+window.cancelAnimationFrame(bounce);
+}
+
+var start = function(e){
+	e.preventDefault();
+	if (exist == 0){
+	exist = 1;
+	run = 1;
+	ctx.clearRect(0, 0, c.width, c.height);
+x = 50;
+y = 50;
+xv = 5;
+yv = 5;
+	window.requestAnimationFrame(bounce);
+	}
+	if (exist == 1 && run == 0){
+	run = 1;
+	window.requestAnimationFrame(bounce);
+	}
+}
+
+var stop = function(e){
+	e.preventDefault();
+	run = 0;
+	}
+
+var bounce = function(){
+	if (x < 50){
+	xv = -1 * xv
+	yv = yv
+	}
+	if (x > c.width - 200){
+	xv = -1 * xv
+	yv = yv
+	}
+	if (y < 50){
+	yv = -1 * yv
+	xv = xv
+	}
+	if (y > c.height - 250){
+	yv = -1 * yv
+	xv = xv
+	}
+	x = x + xv
+	y = y + yv
+	ctx.drawImage(img,x,y);
+	
+if (run == 1){
+	window.requestAnimationFrame(bounce);
+	}
+
+}
+
+d.addEventListener("click",start)
+button.addEventListener("click",clear);
+stopb.addEventListener("click",stop);
+
+
+</script>
+
+
+
+	
+
+
+
+
+
