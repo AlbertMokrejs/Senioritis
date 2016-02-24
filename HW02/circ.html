@@ -1,10 +1,11 @@
-<canvas height=600 width=600 id="slate"></canvas><button id = "start"> start</button><button id="clicker">clear</button>
+<canvas height=600 width=600 id="slate"></canvas><button id = "start"> start</button><button id="clicker">clear</button><button id = "stop"> stop</button>
 
 <script>
 var c = document.getElementById("slate");
 var d = document.getElementById("start");
 var ctx = c.getContext("2d");
 var button = document.getElementById("clicker");
+var stopb = document.getElementById("stop");
 
 ctx.font = "20px Arial";
 ctx.fillStyle = "#000000";
@@ -17,6 +18,9 @@ var grow = 2;
 var roto = 0;
 var rgrow = 5;
 var conVar = 180/Math.PI;
+var exist = 0;
+var run = 0;
+
 
 var clear = function(e){
 	e.preventDefault();
@@ -25,18 +29,35 @@ var clear = function(e){
 	radus = 3;
 	indeed = 0;
 	roto = 0;
+	exist = 0;
+	run = 0;
 	window.cancelAnimationFrame(circ);
 	}
 	
 var start = function(e){
 	e.preventDefault();
+	if (exist == 0){
+	exist = 1;
 	ctx.clearRect(0, 0, c.width, c.height);
 	indeed = 1;
 	grow = 2;
 	radus = 3;
 	roto = 0;
+	run = 1;
 	window.requestAnimationFrame(circ);
+	}
+	if (exist == 1 && run == 0){
+	run = 1;
+	window.requestAnimationFrame(circ);
+	}	
+	
+	
 }
+
+var stop = function(e){
+	e.preventDefault();
+	run = 0;
+	}
 	
 var circ = function(){
 	
@@ -93,11 +114,14 @@ var circ = function(){
 
 	}
 	
+	if (run == 1){
 	window.requestAnimationFrame(circ);
+	}
 }
 
 d.addEventListener("click",start)
 button.addEventListener("click",clear);
+stopb.addEventListener("click",stop);
 
 
 </script>
